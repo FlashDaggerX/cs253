@@ -1,0 +1,42 @@
+import java.util.ArrayList;
+
+public class EfficiencyTestPlain
+{
+	public static void main(String[] args)
+	{
+
+		time(256000);
+	}
+
+	public static void time(final int COUNT)
+	{
+		ArrayList<Integer> list = new ArrayList<>();
+
+		Long starttime = System.currentTimeMillis();
+		for (int i = 0; i <= COUNT; i++)
+			list.add(i);
+		Long time_size = System.currentTimeMillis() - starttime;
+
+		list.clear();
+		Long divtime = 0L;
+		int idx = 0;
+		starttime = System.currentTimeMillis();
+		for (int i = 0; i <= COUNT; i++)
+		{
+			divtime = System.currentTimeMillis();
+			idx = list.size()/2;
+			starttime -= System.currentTimeMillis() - divtime;
+			list.add(idx, i);
+		}
+		Long time_half = System.currentTimeMillis() - starttime;
+
+		list.clear();
+		starttime = System.currentTimeMillis();
+		for (int i = 0; i <= COUNT; i++)
+			list.add(0, i);
+		Long time_zero = System.currentTimeMillis() - starttime;
+
+		System.out.printf("Time for %d add() operations\t time_size = %.2f(s)\ttime_half = %.2f(s)\ttime_zero = %.2f(s)\n",
+				COUNT, time_size.doubleValue()/1000, time_half.doubleValue()/1000, time_zero.doubleValue()/1000);
+	}
+}

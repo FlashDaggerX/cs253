@@ -1,0 +1,33 @@
+/**
+	 * Shifts the elements starting at the specified index to the left by 1.
+	 * @param idx The index
+	 * @param ofs The direction in which to shift (1 or -1)
+	 */
+	private void shift(int idx, int ofs)
+	{
+		if (isEmpty() || isFull())
+			// The stack cannot be shifted.
+			return;
+
+		E outerref = stack[idx];
+		E nextref = null;
+		if (ofs < 0)
+			stack[idx] = null;
+
+		while (outerref != null)
+		{
+			idx+=ofs;
+			nextref = stack[idx];
+			stack[idx] = outerref;
+			outerref = stack[idx + ofs];
+
+			// This increment/decrement will be the only one checked, since in the next loop,
+			// this shift is guaranteed. If it breaks, there's no empty spaces left.
+			idx+=ofs;
+			if (idx + 1 >= stack.length || idx - 1 < 0)
+				break;
+
+			stack[idx] = nextref;
+			nextref = stack[idx + ofs];
+		}
+	}
